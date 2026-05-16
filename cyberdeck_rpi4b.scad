@@ -164,11 +164,12 @@ module keyboard_visual() {
         if(c < 2 || c > n0-3)
             translate([cx, ry0, 0]) keycap();           // mod keys
     }
-    // Spacebar (5u wide)
+    // Spacebar — wide bar, hull of two keycaps
     color([0.17,0.14,0.11])
-    translate([ox0/2, ry0, 0]) {
-        cylinder(r1=KP*2.8, r2=KP*2.5, h=3.2, $fn=24);
-        translate([0,0,3.2]) sphere(r=KP*2.5, $fn=24);
+    translate([ox0/2, ry0, 0])
+    hull() {
+        translate([-KP*2.2, 0, 0]) keycap();
+        translate([ KP*2.2, 0, 0]) keycap();
     }
 }
 
@@ -264,9 +265,6 @@ module _btm_side_surfaces() {
     for(sx=[-1,1]) {
         sx_pos = sx*CASE_W/2;
         fz     = BTM_H/2;
-        // Panel frame
-        translate([sx_pos, 0, fz]) rotate([0,-sx*90,0])
-            pframe(CASE_D-20, BTM_H-16);
         // Rivet rows
         translate([sx_pos, 0, BTM_H-8]) rv_y(CASE_D-24, 17);
         translate([sx_pos, 0,        8]) rv_y(CASE_D-24, 17);
